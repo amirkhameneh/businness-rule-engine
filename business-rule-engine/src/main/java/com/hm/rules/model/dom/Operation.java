@@ -8,6 +8,43 @@ import java.util.stream.Collectors;
 
 public class Operation {
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((leftTermString == null) ? 0 : leftTermString.hashCode());
+		result = prime * result + ((operatorString == null) ? 0 : operatorString.hashCode());
+		result = prime * result + ((rightTermString == null) ? 0 : rightTermString.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Operation other = (Operation) obj;
+		if (leftTermString == null) {
+			if (other.leftTermString != null)
+				return false;
+		} else if (!leftTermString.equals(other.leftTermString))
+			return false;
+		if (operatorString == null) {
+			if (other.operatorString != null)
+				return false;
+		} else if (!operatorString.equals(other.operatorString))
+			return false;
+		if (rightTermString == null) {
+			if (other.rightTermString != null)
+				return false;
+		} else if (!rightTermString.equals(other.rightTermString))
+			return false;
+		return true;
+	}
+
 	enum Operator{ EQUAL , NOTEQUAL,GREATER,GREATEROREQUAL,LESSER,LESSEROREQUAL,CONTAINS,AND,OR}
 	
 	enum TermType{ REFERENCE , PARAMETER,LONG,STRING,SET}

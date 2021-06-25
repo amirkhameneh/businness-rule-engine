@@ -12,17 +12,22 @@ public interface RuleEngineService {
 	
 	List<RuleRow> getMatchedRuleRows(String ruleId,List<Parameter> parameters);
 	
+	
 	void SaveRule(Rule rule);
 	
 	void removeRule(String ruleId);
 	
 	List<Rule> getRules(String zoneId);
 	
+	
+	
 	void addRuleRow(RuleRow ruleRow);
 	
 	void removeRuleRow(RuleRow ruleRow);
 	
 	List<RuleRow> getRuleRows(String ruleId);
+	
+	
 	
 	void saveZone(Zone zone);
 	
