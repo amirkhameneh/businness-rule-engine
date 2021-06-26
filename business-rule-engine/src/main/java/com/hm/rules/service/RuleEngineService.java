@@ -10,7 +10,7 @@ import com.hm.rules.model.entity.Zone;
 
 public interface RuleEngineService {
 	
-	List<RuleRow> getMatchedRuleRows(String ruleId,List<Parameter> parameters);
+	List<RuleRow> getMatchedRuleRows(String ruleId,List<Parameter> parametersList);
 	
 	
 	void SaveRule(Rule rule);
