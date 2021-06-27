@@ -1,5 +1,6 @@
 package com.hm.rules.model.dto;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,19 +22,22 @@ public class RuleInMemoryRepository {
 	private static Map<String,Rule> rules = new HashMap(); 
 	
 	public void saveRule(Rule rule) {
-		rule.getRuleRows().forEach(ruleRow-> 
-				{if (ruleRow.getConditionExpression() == null){
-					ruleRow.setConditionExpression(
-							expressionEvaluatorService.compileExpression(
-									ruleRow.getConditionalExpressionString()));}
-				if(ruleRow.getPriority()==null) {
-					ruleRow.setPriority(0);
-				}
-				});
 		
-		
+		List<RuleRow> sortedRows = rule.getRuleRows().stream()
+											.map(ruleRow-> 
+													{if (ruleRow.getConditionExpression() == null){
+														ruleRow.setConditionExpression(
+																expressionEvaluatorService.compileExpression(
+																		ruleRow.getConditionalExpressionString()));}
+													 if(ruleRow.getPriority()==null) {
+														ruleRow.setPriority(0);
+													 }
+													 return ruleRow;
+													}
+												).sorted(Comparator.comparingInt(RuleRow::getPriority))
+												 .collect(Collectors.toList());
 
-
+		rule.setRuleRows(sortedRows);
 		
 		rules.put(rule.getId(), rule);
 	}

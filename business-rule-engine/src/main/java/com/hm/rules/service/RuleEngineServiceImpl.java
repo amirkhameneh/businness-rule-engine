@@ -17,14 +17,20 @@ public class RuleEngineServiceImpl implements RuleEngineService {
 	@Autowired
 	RuleInMemoryRepository ruleInMemoryRepository;
 	
+	@Autowired
+	ExpressionEvaluatorService expressionEvaluatorService;
+	
 	@Override
 	public List<RuleRow> getMatchedRuleRows(String ruleId, List<Parameter> parametersList) {
-		Map<String, Long> parameters = 
-				parametersList.stream().collect(Collectors.toMap(Parameter::getKey, Parameter::getValue));
+		Map<String, Long> parameters = parametersList.stream()
+													 .collect(Collectors.toMap(Parameter::getKey, Parameter::getValue));
 		
-		
-		// TODO Auto-generated method stub
-		return null;
+		return ruleInMemoryRepository.getRule(ruleId).getRuleRows()
+													 .stream()
+													 .filter(ruleRow->expressionEvaluatorService
+															 .evaluateExpression(ruleRow.getConditionExpression(), 
+																 				parameters))
+													 .collect(Collectors.toList());
 	}
 
 	@Override

@@ -1,7 +1,9 @@
 package com.hm.rules.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.junit.jupiter.api.Test;
@@ -255,4 +257,46 @@ public class ExpressionEvaluatorServiceImplTest {
 		//then
 		assertArrayEquals(expectedExecutionSequence.toArray(),executionSequence.toArray());
 	}
+	
+	@Test
+    void it_should_return_true_when_evaluate_expression() {
+		
+		//given
+		List<Operation> executionSequence = new ArrayList();
+				
+		List<Operation> expectedExecutionSequence = new ArrayList();
+		expectedExecutionSequence.add(new Operation(0, "p1", 0, "1000","=="));
+		expectedExecutionSequence.add(new Operation(0, "p2", 0, "50","=="));
+		expectedExecutionSequence.add(new Operation(0, null, 1, null,"&&"));
+		expectedExecutionSequence.add(new Operation(0, "p7", 0, "[1,3,5,7,899]","~~"));
+		expectedExecutionSequence.add(new Operation(2, null, 3, null,"&&"));
+		
+		Map<String,Long> parameters = new HashMap();
+		parameters.put("p1", 1000L);
+		parameters.put("p2", 50L);
+		parameters.put("p7", 3L);
+		
+		//when then
+		assertEquals(expressionEvaluatorService.evaluateExpression(expectedExecutionSequence, parameters), true);
+	}
+	@Test
+    void it_should_return_true_when_evaluate_expression2() {
+		
+		//given
+
+		String expression = "((p1>>1000&&(p2!=50&&p3<=70))||p51~~[300,501,700])";
+		List<Operation> executionSequence = new ArrayList();		
+	
+		Map<String,Long> parameters = new HashMap();
+		parameters.put("p1", 1001L);
+		parameters.put("p2", 51L);
+		parameters.put("p3", 70L);
+		parameters.put("p51", 500L);
+		//when
+		executionSequence = expressionEvaluatorService.compileExpression(expression);
+		
+		//then
+		assertEquals(expressionEvaluatorService.evaluateExpression(
+				executionSequence, parameters), true);
+	}	
 }

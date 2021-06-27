@@ -45,9 +45,9 @@ public class Operation {
 		return true;
 	}
 
-	enum Operator{ EQUAL , NOTEQUAL,GREATER,GREATEROREQUAL,LESSER,LESSEROREQUAL,CONTAINS,AND,OR}
+	public enum Operator{ EQUAL , NOTEQUAL,GREATER,GREATEROREQUAL,LESSER,LESSEROREQUAL,CONTAINS,AND,OR}
 	
-	enum TermType{ REFERENCE , PARAMETER,LONG,STRING,SET}
+	public enum TermType{ REFERENCE , PARAMETER,LONG,STRING,SET}
 	
 
 
@@ -189,13 +189,13 @@ public class Operation {
 			}
 		}
 		
-		switch(operatorString) {
+		/*switch(operatorString) {
 		  case "==":
 		    this.operator = Operator.EQUAL;
-		    break;
+		   
 		  case "!=":
 			    this.operator = Operator.NOTEQUAL;
-		    break;
+
 		  case ">=":
 			    this.operator = Operator.GREATEROREQUAL;
 		  case "<=":
@@ -210,8 +210,17 @@ public class Operation {
 			    this.operator = Operator.AND;
 		  case "||":
 			    this.operator = Operator.OR;			    
-		}
+		}*/
 		
+	}
+
+	@Override
+	public String toString() {
+		return "Operation [leftTermType=" + leftTermType + ", leftTermIndex=" + leftTermIndex + ", leftTermString="
+				+ leftTermString + ", leftTermLong=" + leftTermLong + ", rightTermType=" + rightTermType
+				+ ", rightTermIndex=" + rightTermIndex + ", rightTermString=" + rightTermString + ", rightTermLong="
+				+ rightTermLong + ", rightTermSet=" + rightTermSet + ", operatorString=" + operatorString
+				+ ", operator=" + operator + "]";
 	}
 
 	public String getOperatorString() {

@@ -3,10 +3,13 @@ package com.hm.rules.service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
 import com.hm.rules.model.dom.Operation;
+import com.hm.rules.model.dom.Operation.Operator;
+import com.hm.rules.model.dom.Operation.TermType;
 import com.hm.rules.model.dom.Token;
 
 
@@ -19,9 +22,73 @@ public class ExpressionEvaluatorServiceImpl implements ExpressionEvaluatorServic
 	public static final List<String> CONDITIONAL_OPERATORS = Arrays.asList("==",">=","!=","<=","<<",">>","~~");
 	
 
+	@Override
+	public boolean evaluateExpression(List<Operation> executionSequence, Map<String,Long> parameters) {
+		List<Boolean> executionSequenceValues = new ArrayList();
+		try {			
+			executionSequence.stream()
+							 .forEach(o->{
+										executionSequenceValues.add(
+												evaluateOperation(o,executionSequenceValues,parameters));
+							    		});
+			return executionSequenceValues.get(executionSequenceValues.size()-1);
+		}
+		catch(Exception e) {
+			return false;
+		}
+		
+	}
+	
+	public boolean evaluateOperation(Operation operation, List<Boolean> executionSequenceValues ,Map<String,Long> parameters) {
+		long leftTermValue;
+		long rightTermValue;
 
-	
-	
+		if ( operation.getOperatorString()==null) {
+			return executionSequenceValues.get(operation.getLeftTermIndex());
+		}else if(operation.getOperatorString().equals("&&") ){
+				return executionSequenceValues.get(operation.getLeftTermIndex()) && 
+					   executionSequenceValues.get(operation.getRightTermIndex());
+
+		}else if(operation.getOperatorString().equals("||")  ){
+				return executionSequenceValues.get(operation.getLeftTermIndex()) || 
+					   executionSequenceValues.get(operation.getRightTermIndex());
+		}else if(operation.getOperatorString().equals("~~")  ){
+			if (operation.getLeftTermType() == TermType.LONG) {
+				leftTermValue = operation.getLeftTermLong();
+			}else {
+				leftTermValue = parameters.get(operation.getLeftTermString()) ;
+			}
+			return operation.getRightTermSet().contains(leftTermValue);
+		}else { 
+			
+			if (operation.getLeftTermType() == TermType.LONG) {
+				leftTermValue = operation.getLeftTermLong();
+			}else {
+				leftTermValue = parameters.get(operation.getLeftTermString()) ;
+			}
+			if (operation.getRightTermType() == TermType.LONG) {
+				rightTermValue = operation.getRightTermLong();
+			}else {
+				rightTermValue = parameters.get(operation.getRightTermString()) ;
+			}
+			if(operation.getOperatorString().equals("==")){
+				return leftTermValue == rightTermValue;
+			}else if(operation.getOperatorString().equals(">>")){
+				return leftTermValue > rightTermValue;
+			}else if(operation.getOperatorString().equals("<<")){
+				return leftTermValue < rightTermValue;
+			}else if(operation.getOperatorString().equals("<=")){
+				return leftTermValue <= rightTermValue;
+			}else if(operation.getOperatorString().equals(">=")){
+				return leftTermValue >= rightTermValue;
+			}else if(operation.getOperatorString().equals("!=")){
+				return leftTermValue != rightTermValue;
+			}
+		}
+		
+		
+		return true;
+	}
 	@Override
 	public List<Operation> compileExpression(String expression) {
 		
@@ -63,9 +130,9 @@ public class ExpressionEvaluatorServiceImpl implements ExpressionEvaluatorServic
 	     int countOfLeftMinusRightParentheses=0;
 	     
 	     for (Token t :expression) {
-    		 if (t.getType()=="LP" ) {
+    		 if (t.getType().equals("LP") ) {
     			 countOfLeftMinusRightParentheses++;
-		 	}else if (t.getType()=="RP" ){
+		 	}else if (t.getType().equals("RP") ){
 		 		countOfLeftMinusRightParentheses--;
 		 	}
     		 if (countOfLeftMinusRightParentheses<0) {
@@ -137,7 +204,7 @@ public class ExpressionEvaluatorServiceImpl implements ExpressionEvaluatorServic
 
     public void truncateParentheses(List<Token> expression) {
     	List<Token> truncatedExpression;
-    	while((expression.get(0).getType()=="LP" && expression.get(expression.size()-1).getType()=="RP" )){
+    	while((expression.get(0).getType().equals("LP") && expression.get(expression.size()-1).getType().equals("RP") )){
     		truncatedExpression = new ArrayList();
     		truncatedExpression = expression.subList(1, expression.size()-1);
   		     if  (validateExpressionParentheses(truncatedExpression)) {
@@ -165,13 +232,13 @@ public class ExpressionEvaluatorServiceImpl implements ExpressionEvaluatorServic
 	    int cursor=0;
 	    
 	     for (Token t:expression) {
-	    	 if (t.getType()=="LP") {
+	    	 if (t.getType().equals("LP")) {
 	    		 parenthesesCounter++;
-	    	 }else if (t.getType()=="RP") {
+	    	 }else if (t.getType().equals("RP")) {
 	    		 parenthesesCounter--;
 	    	 } 
 	    	 
-	    	 if (t.getType()=="LO" && parenthesesCounter==0) {
+	    	 if (t.getType().equals("LO") && parenthesesCounter==0) {
 	    		 truncateParentheses( term);
 	    		 operators.add(t.getName());
 	    		 terms.add(term);

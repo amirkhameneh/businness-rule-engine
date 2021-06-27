@@ -1,11 +1,14 @@
 package com.hm.rules.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.hm.rules.model.dom.Operation;
 import com.hm.rules.model.dom.Token;
 
 public interface ExpressionEvaluatorService {
+	
+	boolean evaluateExpression(List<Operation> executionSequence, Map<String,Long> parameters);
 	
 	List<Operation> compileExpression(String expression);
 	
