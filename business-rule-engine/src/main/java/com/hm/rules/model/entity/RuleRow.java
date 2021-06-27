@@ -14,7 +14,7 @@ public class RuleRow {
 	private Date fromDate;
 	
 	private Date toDate;
-	
+	 
 	private Integer priority;
 	
 	private String conditionalExpressionString;

@@ -210,7 +210,7 @@ public class Operation {
 			    this.operator = Operator.AND;
 		  case "||":
 			    this.operator = Operator.OR;			    
-		}*/
+		}*/ 
 		
 	}
 

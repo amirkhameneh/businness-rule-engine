@@ -31,7 +31,7 @@ public class RuleEngineServiceImpl implements RuleEngineService {
 															 .evaluateExpression(ruleRow.getConditionExpression(), 
 																 				parameters))
 													 .collect(Collectors.toList());
-	}
+	} 
 
 	@Override
 	public void SaveRule(Rule rule) {

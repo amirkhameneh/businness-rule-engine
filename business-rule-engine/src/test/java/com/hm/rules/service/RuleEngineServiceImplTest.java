@@ -21,7 +21,7 @@ public class RuleEngineServiceImplTest {
 	
 	@Test
 	void it_should_set_expression_sequence_when_it_is_null() {
-		//Given
+		//Given 
 		Rule rule= new Rule();
 		List<RuleRow> rulerows = new ArrayList();
 		rule.setId("123");

@@ -35,7 +35,7 @@ public class RuleInMemoryRepository {
 													 return ruleRow;
 													}
 												).sorted(Comparator.comparingInt(RuleRow::getPriority))
-												 .collect(Collectors.toList());
+												 .collect(Collectors.toList()); 
 
 		rule.setRuleRows(sortedRows);
 		

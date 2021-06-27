@@ -9,7 +9,7 @@ import com.hm.rules.model.dom.Token;
 public interface ExpressionEvaluatorService {
 	
 	boolean evaluateExpression(List<Operation> executionSequence, Map<String,Long> parameters);
-	
+	 
 	List<Operation> compileExpression(String expression);
 	
 	int complieSubExpression(List<Operation> executionSequence ,List<Token> expression);

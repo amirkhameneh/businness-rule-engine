@@ -36,7 +36,7 @@ public class ExpressionEvaluatorServiceImpl implements ExpressionEvaluatorServic
 		catch(Exception e) {
 			return false;
 		}
-		
+		 
 	}
 	
 	public boolean evaluateOperation(Operation operation, List<Boolean> executionSequenceValues ,Map<String,Long> parameters) {

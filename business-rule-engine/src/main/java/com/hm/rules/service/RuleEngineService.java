@@ -12,7 +12,7 @@ public interface RuleEngineService {
 	
 	List<RuleRow> getMatchedRuleRows(String ruleId,List<Parameter> parametersList);
 	
-	
+	 
 	void SaveRule(Rule rule);
 	
 	void removeRule(String ruleId);

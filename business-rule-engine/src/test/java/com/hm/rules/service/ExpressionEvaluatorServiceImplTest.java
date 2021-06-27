@@ -292,7 +292,7 @@ public class ExpressionEvaluatorServiceImplTest {
 		parameters.put("p2", 51L);
 		parameters.put("p3", 70L);
 		parameters.put("p51", 500L);
-		//when
+		//when 
 		executionSequence = expressionEvaluatorService.compileExpression(expression);
 		
 		//then

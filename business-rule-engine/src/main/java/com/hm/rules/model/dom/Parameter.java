@@ -14,5 +14,5 @@ public class Parameter {
 		this.value = value;
 	}
 	private String key;
-	private long value;
+	private long value; 
 }

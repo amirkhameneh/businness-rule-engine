@@ -34,7 +34,7 @@ public class Rule {
 
 	public void setZone(Zone zone) {
 		this.zone = zone;
-	}
+	} 
 
 	public List<RuleRow> getRuleRows() {
 		return ruleRows;

@@ -14,7 +14,7 @@ public class Token {
 		this.type = type;
 	}
 	public Token(String name, String type) {
-		super();
+		super(); 
 		this.name = name;
 		this.type = type;
 	}
