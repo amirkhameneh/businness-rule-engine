@@ -47,7 +47,7 @@ public class RuleEngineServiceImpl implements RuleEngineService {
 
 	@Override
 	public List<Rule> getRules(String zoneId) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
