@@ -5,17 +5,22 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.hm.rules.dao.RuleInMemoryRepository;
+import com.hm.rules.dao.RuleRepository;
 import com.hm.rules.model.dom.Parameter;
-import com.hm.rules.model.dto.RuleInMemoryRepository;
 import com.hm.rules.model.entity.Rule;
 import com.hm.rules.model.entity.RuleRow;
 import com.hm.rules.model.entity.Zone;
-
+@Service
 public class RuleEngineServiceImpl implements RuleEngineService {
 	
 	@Autowired
 	RuleInMemoryRepository ruleInMemoryRepository;
+
+	@Autowired
+	RuleRepository ruleRepository;
 	
 	@Autowired
 	ExpressionEvaluatorService expressionEvaluatorService;
@@ -35,6 +40,7 @@ public class RuleEngineServiceImpl implements RuleEngineService {
 
 	@Override
 	public void SaveRule(Rule rule) {
+		ruleRepository.save(rule);
 		ruleInMemoryRepository.saveRule(rule);
 		
 	}

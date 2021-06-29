@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections4.CollectionUtils;
+
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -299,4 +299,6 @@ public class ExpressionEvaluatorServiceImplTest {
 		assertEquals(expressionEvaluatorService.evaluateExpression(
 				executionSequence, parameters), true);
 	}	
+	
+	
 }

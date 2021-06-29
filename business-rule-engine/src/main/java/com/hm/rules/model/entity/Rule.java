@@ -2,6 +2,10 @@ package com.hm.rules.model.entity;
 
 import java.util.List;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "rule")
 public class Rule {
 	
 	public String getId() {
@@ -43,7 +47,7 @@ public class Rule {
 	public void setRuleRows(List<RuleRow> ruleRows) {
 		this.ruleRows = ruleRows;
 	}
-
+	@Id
 	private String id;
 	
 	private String name;

@@ -1,4 +1,4 @@
-package com.hm.rules.model.dto;
+package com.hm.rules.dao;
 
 import java.util.Comparator;
 import java.util.HashMap;

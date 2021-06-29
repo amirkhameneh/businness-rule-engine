@@ -7,6 +7,11 @@ public class Parameter {
 	public void setKey(String key) {
 		this.key = key;
 	}
+	public Parameter(String key, long value) {
+		super();
+		this.key = key;
+		this.value = value;
+	}
 	public long getValue() {
 		return value;
 	}
